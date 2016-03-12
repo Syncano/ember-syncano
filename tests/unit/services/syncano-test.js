@@ -10,10 +10,10 @@ test('it contains an account and an instance object', function(assert) {
   let service = this.subject();
   assert.ok(
     service.hasOwnProperty('account'),
-    "The Syncano service does not have an `account` property"
+    "The Syncano service has an `account` property"
   );
   assert.ok(
     service.hasOwnProperty('instance'),
-    "The Syncano service does not have an `instance` property"
+    "The Syncano service has an `instance` property"
   );
 });
