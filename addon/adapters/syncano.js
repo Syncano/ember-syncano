@@ -78,4 +78,7 @@ export default DS.Adapter.extend({
         });
     });
   },
+  findMany(store, type, ids) {
+    return this.query(store, type, { 'query': { 'id': { '_in': ids }}});
+  },
 });
