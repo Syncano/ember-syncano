@@ -54,6 +54,17 @@ export default DS.Adapter.extend({
         });
     });
   },
-  findAll() {},
+  findAll(store, type, sinceToken) {
+    let instance = this.get('syncano.instance');
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      instance.class(type.modelName).dataobject().list()
+        .then(function(data) {
+          Ember.run(null, resolve, data.objects);
+        })
+        .catch(function(error) {
+          Ember.run(null, reject, error);
+        });
+    });
+  },
   query() {},
 });
