@@ -1,13 +1,20 @@
 import Ember from 'ember';
 
-export default {
-  config: null,
+export default Ember.Service.extend({
+  isServiceFactory: true,
   account: null,
   instance: null,
-  create() {
-    this.account = new Syncano({ accountKey: this.config.accountKey });
-    this.instance = new Syncano({ apiKey: this.config.apiKey, instance: this.config.instance });
-    return this;
+  init() {
+    this.set(
+      'account',
+      new Syncano({ accountKey: this.get('config.accountKey') })
+    );
+    this.set(
+      'instance',
+      new Syncano({
+        apiKey: this.get('config.apiKey'),
+        instance: this.get('config.instance')
+      })
+    );
   },
-  isServiceFactory: true,
-};
+});
