@@ -2,6 +2,7 @@ import DS from 'ember-data';
 import Ember from 'ember';
 
 export default DS.Adapter.extend({
+  defaultSerializer: '-default',
   findRecord(store, type, id) {
     let instance = this.get('syncano.instance');
     return new Ember.RSVP.Promise(function(resolve, reject) {
