@@ -1,0 +1,14 @@
+{{#link-to 'persons' class='back'}}&laquo; Back to People{{/link-to}}
+<table>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Age</th>
+    </tr>
+    <tr>
+        <td>{{input type='text' id='firstName' value=model.firstName}}</td>
+        <td>{{input type='text' id='lastName' value=model.lastName}}</td>
+        <td>{{input type='number' id='age' value=model.age}}</td>
+    </tr>
+</table>
+<button class='save' {{action 'save' model}}>Save</button>

@@ -2,6 +2,14 @@
 
 module.exports = function(environment) {
   var ENV = {
+    // Fill in the credentials below to connect the dummy app to an actual
+    // Syncano instance. Be sure to also uncomment the ENV['ember-cli-mirage']
+    // line in the development section.
+    syncano: {
+      accountKey: '',
+      apiKey: '',
+      instance: ''
+    },
     modulePrefix: 'dummy',
     environment: environment,
     baseURL: '/',
@@ -20,6 +28,10 @@ module.exports = function(environment) {
   };
 
   if (environment === 'development') {
+    // Uncomment the line below to disable Mirage for the dummy app
+    // and connect to an actual Syncano instance.
+    // ENV['ember-cli-mirage'] = { enabled: false };
+
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;

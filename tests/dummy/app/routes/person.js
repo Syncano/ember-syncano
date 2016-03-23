@@ -1,0 +1,12 @@
+import Ember from 'ember';
+
+export default Ember.Route.extend({
+  model(params) {
+    return this.store.find('person', params.person_id);
+  },
+  actions: {
+    save: function(person) {
+      person.save();
+    },
+  },
+});

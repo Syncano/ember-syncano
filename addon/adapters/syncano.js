@@ -17,8 +17,7 @@ export default DS.Adapter.extend({
   },
   createRecord(store, type, snapshot) {
     let instance = this.get('syncano.instance');
-    let record = this.serialize(snapshot);
-    console.log(record);
+    let record = this.serialize(snapshot, { includeId: true });
     return new Ember.RSVP.Promise(function(resolve, reject) {
       instance.class(type.modelName).dataobject().add(record)
         .then(function(data) {
