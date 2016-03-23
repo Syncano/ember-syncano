@@ -1,7 +1,9 @@
+import ENV from '../config/environment';
+
 export default function() {
 
   this.urlPrefix = 'https://api.syncano.io';
-  this.namespace = '/v1/instances/wandering-glitter-7764/classes';
+  this.namespace = '/v1/instances/' + ENV.syncano.instance + '/classes';
 
   this.get('/person/objects', function(db) {
     return { 'objects': db.people };

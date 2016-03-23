@@ -6,9 +6,9 @@ module.exports = function(environment) {
     // Syncano instance. Be sure to also uncomment the ENV['ember-cli-mirage']
     // line in the development section.
     syncano: {
-      accountKey: '',
-      apiKey: '',
-      instance: ''
+      accountKey: 'fake',
+      apiKey: 'fake',
+      instance: 'fake'
     },
     modulePrefix: 'dummy',
     environment: environment,
