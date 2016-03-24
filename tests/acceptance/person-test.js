@@ -56,16 +56,3 @@ test('creating a record adds it to the list', function(assert) {
     );
   });
 });
-
-test('updating a record persists changes', function(assert) {
-  visit('person/1');
-  fillIn('#firstName', 'Zachary');
-  fillIn('#lastName', 'Garwood');
-  visit('/');
-  andThen(function() {
-    assert.equal(
-      find('li:first>a').text(), 'Garwood, Zachary',
-      'The record is updated'
-    );
-  });
-});
