@@ -3,7 +3,7 @@
 <ol>
 {{#each model as |person|}}
     <li>
-        {{#link-to 'person' person.id}}{{person.lastName}}, {{person.firstName}}{{/link-to}}
+        {{#link-to 'person' person.id}}{{full-name person=person}}{{/link-to}}
         <button class='delete' {{action 'delete' person}}>Delete</button>
     </li>
 {{/each}}

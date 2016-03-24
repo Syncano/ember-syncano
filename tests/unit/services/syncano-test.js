@@ -5,7 +5,6 @@ moduleFor('service:syncano', 'Unit | Service | syncano', {
   // needs: ['service:foo']
 });
 
-// Replace this with your real tests.
 test('it contains an account and an instance object', function(assert) {
   let service = this.subject();
   assert.ok(
@@ -15,5 +14,13 @@ test('it contains an account and an instance object', function(assert) {
   assert.ok(
     service.hasOwnProperty('instance'),
     "The Syncano service has an `instance` property"
+  );
+});
+
+test('it contains a codebox factory method', function(assert) {
+  let service = this.subject();
+  assert.ok(
+    typeof service.codebox === 'function',
+    "The Syncano service has an `codebox` method"
   );
 });
