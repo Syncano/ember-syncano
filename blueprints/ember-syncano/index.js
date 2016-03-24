@@ -5,6 +5,6 @@ module.exports = {
   },
 
   afterInstall: function(options) {
-    return this.addBowerPackagesToProject([{ name: 'syncano', target: '*' }]);
+    return this.addBowerPackagesToProject([{ name: 'syncano', target: '^0.4.4' }]);
   }
 };
