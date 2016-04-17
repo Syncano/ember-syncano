@@ -13,7 +13,8 @@ export default DS.Adapter.extend({
   findRecord(store, type, id) {
     let instance = this.get('syncano.instance');
     return new Ember.RSVP.Promise(function(resolve, reject) {
-      instance.class(type.modelName).dataobject(id).detail()
+      // instance.class(type.modelName).dataobject(id).detail()
+      instance.DataObject.please().get({id: id, className: type.modelName})
         .then(function(data) {
           Ember.run(null, resolve, data);
         })
@@ -29,8 +30,10 @@ export default DS.Adapter.extend({
   createRecord(store, type, snapshot) {
     let instance = this.get('syncano.instance');
     let record = this.serialize(snapshot, { includeId: true });
+    record.className = type.modelName;
     return new Ember.RSVP.Promise(function(resolve, reject) {
-      instance.class(type.modelName).dataobject().add(record)
+      // instance.class(type.modelName).dataobject().add(record)
+      instance.DataObject.please().create(record)
         .then(function(data) {
           Ember.run(null, resolve, data);
         })
@@ -47,7 +50,8 @@ export default DS.Adapter.extend({
     let instance = this.get('syncano.instance');
     let record = this.serialize(snapshot, { includeId: true });
     return new Ember.RSVP.Promise(function(resolve, reject) {
-      instance.class(type.modelName).dataobject(record.id).update(record)
+      // instance.class(type.modelName).dataobject(record.id).update(record)
+      instance.DataObject.please().update({id: record.id, className: type.modelName}, record)
         .then(function(data) {
           Ember.run(null, resolve, data);
         })
@@ -64,7 +68,8 @@ export default DS.Adapter.extend({
     let instance = this.get('syncano.instance');
     let record = this.serialize(snapshot, { includeId: true });
     return new Ember.RSVP.Promise(function(resolve, reject) {
-      instance.class(type.modelName).dataobject(record.id).delete()
+      // instance.class(type.modelName).dataobject(record.id).delete()
+      instance.DataObject.please().delete({id: record.id, className: type.modelName})
         .then(function() {
           Ember.run(null, resolve);
         })
@@ -81,7 +86,8 @@ export default DS.Adapter.extend({
   findAll(store, type) {
     let instance = this.get('syncano.instance');
     return new Ember.RSVP.Promise(function(resolve, reject) {
-      instance.class(type.modelName).dataobject().list()
+      // instance.class(type.modelName).dataobject().list()
+      instance.DataObject.please().list({className: type.modelName})
         .then(function(data) {
           Ember.run(null, resolve, data.objects);
         })
@@ -99,7 +105,8 @@ export default DS.Adapter.extend({
   query(store, type, query) {
     let instance = this.get('syncano.instance');
     return new Ember.RSVP.Promise(function(resolve, reject) {
-      instance.class(type.modelName).dataobject().list(query)
+      // instance.class(type.modelName).dataobject().list(query)
+      instance.DataObject.please().list({className: type.modelName}).filter(query)
         .then(function(data) {
           Ember.run(null, resolve, data.objects);
         })
