@@ -1,7 +1,7 @@
 {
   "name": "ember-syncano",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.1.0",
+  "description": "The Ember CLI addon for seemlessly interacting with Syncano.",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -42,7 +42,8 @@
     "loader.js": "^4.0.0"
   },
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "syncano"
   ],
   "dependencies": {
     "ember-cli-babel": "^5.1.5"
