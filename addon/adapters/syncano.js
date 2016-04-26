@@ -11,10 +11,10 @@ export default DS.Adapter.extend({
    * Used by the store to retrieve a single record.
    */
   findRecord(store, type, id) {
-    let instance = this.get('syncano.instance');
+    let connection = this.get('syncano.connection');
+    let instanceName = this.get('syncano.instanceName')
     return new Ember.RSVP.Promise(function(resolve, reject) {
-      // instance.class(type.modelName).dataobject(id).detail()
-      instance.DataObject.please().get({id: id, className: type.modelName})
+      connection.DataObject.please().get({id: id, className: type.modelName, instanceName: instanceName})
         .then(function(data) {
           Ember.run(null, resolve, data);
         })
@@ -28,12 +28,12 @@ export default DS.Adapter.extend({
    * Used by the store to create a record.
    */
   createRecord(store, type, snapshot) {
-    let instance = this.get('syncano.instance');
+    let connection = this.get('syncano.connection');
     let record = this.serialize(snapshot, { includeId: true });
+    record.instanceName = this.get('syncano.instanceName');
     record.className = type.modelName;
     return new Ember.RSVP.Promise(function(resolve, reject) {
-      // instance.class(type.modelName).dataobject().add(record)
-      instance.DataObject.please().create(record)
+      connection.DataObject.please().create(record)
         .then(function(data) {
           Ember.run(null, resolve, data);
         })
@@ -47,11 +47,11 @@ export default DS.Adapter.extend({
    * Used by the store to update a record.
    */
   updateRecord(store, type, snapshot) {
-    let instance = this.get('syncano.instance');
+    let connection = this.get('syncano.connection');
     let record = this.serialize(snapshot, { includeId: true });
+    let instanceName = this.get('syncano.instanceName');
     return new Ember.RSVP.Promise(function(resolve, reject) {
-      // instance.class(type.modelName).dataobject(record.id).update(record)
-      instance.DataObject.please().update({id: record.id, className: type.modelName}, record)
+      connection.DataObject.please().update({id: record.id, className: type.modelName, instanceName: instanceName}, record)
         .then(function(data) {
           Ember.run(null, resolve, data);
         })
@@ -65,11 +65,11 @@ export default DS.Adapter.extend({
    * Used by the store to delete a record.
    */
   deleteRecord(store, type, snapshot) {
-    let instance = this.get('syncano.instance');
+    let connection = this.get('syncano.connection');
     let record = this.serialize(snapshot, { includeId: true });
+    let instanceName = this.get('syncano.instanceName');
     return new Ember.RSVP.Promise(function(resolve, reject) {
-      // instance.class(type.modelName).dataobject(record.id).delete()
-      instance.DataObject.please().delete({id: record.id, className: type.modelName})
+      connection.DataObject.please().delete({id: record.id, className: type.modelName, instanceName: instanceName})
         .then(function() {
           Ember.run(null, resolve);
         })
@@ -84,12 +84,12 @@ export default DS.Adapter.extend({
    * certain model.
    */
   findAll(store, type) {
-    let instance = this.get('syncano.instance');
+    let instanceName = this.get('syncano.instanceName');
+    let connection = this.get('syncano.connection');
     return new Ember.RSVP.Promise(function(resolve, reject) {
-      // instance.class(type.modelName).dataobject().list()
-      instance.DataObject.please().list({className: type.modelName})
+      connection.DataObject.please().list({className: type.modelName, instanceName: instanceName})
         .then(function(data) {
-          Ember.run(null, resolve, data.objects);
+          Ember.run(null, resolve, data);
         })
         .catch(function(error) {
           Ember.run(null, reject, error);
@@ -103,12 +103,12 @@ export default DS.Adapter.extend({
    * as shown in the Syncano docs.
    */
   query(store, type, query) {
-    let instance = this.get('syncano.instance');
+    let connection = this.get('syncano.connection');
+    let instanceName = this.get('syncano.instanceName');
     return new Ember.RSVP.Promise(function(resolve, reject) {
-      // instance.class(type.modelName).dataobject().list(query)
-      instance.DataObject.please().list({className: type.modelName}).filter(query)
+      connection.DataObject.please().list({className: type.modelName, instanceName: instanceName}).filter(query)
         .then(function(data) {
-          Ember.run(null, resolve, data.objects);
+          Ember.run(null, resolve, data);
         })
         .catch(function(error) {
           Ember.run(null, reject, error);
@@ -122,6 +122,6 @@ export default DS.Adapter.extend({
    * records.
    */
   findMany(store, type, ids) {
-    return this.query(store, type, { 'query': { 'id': { '_in': ids }}});
+    return this.query(store, type, { 'id': { '_in': ids }});
   },
 });

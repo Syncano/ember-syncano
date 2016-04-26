@@ -26,11 +26,14 @@ export default Ember.Service.extend({
       new Syncano({ accountKey: this.get('config.accountKey') })
     );
     this.set(
-      'instance',
+      'connection',
       new Syncano({
-        apiKey: this.get('config.apiKey'),
-        instance: this.get('config.instance')
+        apiKey: this.get('config.apiKey')
       })
+    );
+    this.set(
+      'instanceName',
+      this.get('config.instance')
     );
   },
 
