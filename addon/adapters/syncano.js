@@ -12,7 +12,7 @@ export default DS.Adapter.extend({
    */
   findRecord(store, type, id) {
     let connection = this.get('syncano.connection');
-    let instanceName = this.get('syncano.instanceName')
+    let instanceName = this.get('syncano.instance')
     return new Ember.RSVP.Promise(function(resolve, reject) {
       connection.DataObject.please().get({id: id, className: type.modelName, instanceName: instanceName})
         .then(function(data) {
@@ -30,7 +30,7 @@ export default DS.Adapter.extend({
   createRecord(store, type, snapshot) {
     let connection = this.get('syncano.connection');
     let record = this.serialize(snapshot, { includeId: true });
-    record.instanceName = this.get('syncano.instanceName');
+    record.instanceName = this.get('syncano.instance');
     record.className = type.modelName;
     return new Ember.RSVP.Promise(function(resolve, reject) {
       connection.DataObject.please().create(record)
@@ -49,7 +49,7 @@ export default DS.Adapter.extend({
   updateRecord(store, type, snapshot) {
     let connection = this.get('syncano.connection');
     let record = this.serialize(snapshot, { includeId: true });
-    let instanceName = this.get('syncano.instanceName');
+    let instanceName = this.get('syncano.instance');
     return new Ember.RSVP.Promise(function(resolve, reject) {
       connection.DataObject.please().update({id: record.id, className: type.modelName, instanceName: instanceName}, record)
         .then(function(data) {
@@ -67,7 +67,7 @@ export default DS.Adapter.extend({
   deleteRecord(store, type, snapshot) {
     let connection = this.get('syncano.connection');
     let record = this.serialize(snapshot, { includeId: true });
-    let instanceName = this.get('syncano.instanceName');
+    let instanceName = this.get('syncano.instance');
     return new Ember.RSVP.Promise(function(resolve, reject) {
       connection.DataObject.please().delete({id: record.id, className: type.modelName, instanceName: instanceName})
         .then(function() {
@@ -84,7 +84,7 @@ export default DS.Adapter.extend({
    * certain model.
    */
   findAll(store, type) {
-    let instanceName = this.get('syncano.instanceName');
+    let instanceName = this.get('syncano.instance');
     let connection = this.get('syncano.connection');
     return new Ember.RSVP.Promise(function(resolve, reject) {
       connection.DataObject.please().list({className: type.modelName, instanceName: instanceName})
@@ -104,7 +104,7 @@ export default DS.Adapter.extend({
    */
   query(store, type, query) {
     let connection = this.get('syncano.connection');
-    let instanceName = this.get('syncano.instanceName');
+    let instanceName = this.get('syncano.instance');
     return new Ember.RSVP.Promise(function(resolve, reject) {
       connection.DataObject.please().list({className: type.modelName, instanceName: instanceName}).filter(query)
         .then(function(data) {
