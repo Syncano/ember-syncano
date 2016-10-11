@@ -1,6 +1,11 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
+
+  //TODO login
+
+
+
   /**
    * Must be set to `true` for services.
    */
@@ -18,26 +23,41 @@ export default Ember.Service.extend({
   instance: null,
 
   /**
-   * Set the `account` and `instance` properties on initialization.
+   * Initializer.
+   * create the i
    */
-  init() {
-    this.set(
-      'account',
-      new Syncano({ accountKey: this.get('config.accountKey') })
-    );
-    this.set(
-      'connection',
-      new Syncano({
-        apiKey: this.get('config.apiKey')
-      })
-    );
-    this.set(
-      'instanceName',
-      this.get('config.instance')
-    );
+  init(){
+
+
+    //the config is obtained from the environment
+    const api_key = this.get('config.apiKey');
+    const account_key = this.get('config.accountKey');
+    const instance = this.get('config.instance');
+
+    //for some reason the Syncano class is not really the connection
+    // create new syncano instance, and get the connection from it
+    var connection = new Syncano({
+    }).connection;
+
+    //then configure it
+    connection.accountKey = account_key;
+    connection.apiKey = api_key;
+
+    //bind the connection to the service
+    this.connection = connection;
+
+    //set the instance name
+    this.instance = instance
+
+
+
+
   },
 
+  //TODO TEST Scripts
   /**
+   * OUTDATED??: CODEBOX IS NOW SCRIPT
+   *
    * Used to run arbitrary code in a Syncano Codebox. It's a thin wrapper
    * around the `codebox()` method in the Syncano docs, the difference being
    * that it automatically uses the instance specified in the config
@@ -58,8 +78,11 @@ export default Ember.Service.extend({
    *  },
    */
   codebox(codeboxId) {
-    let codebox = this.get('account')
-      .instance(this.get('config.instance'))
+
+    const instance_name = this.get('instance');
+
+    let codebox = this.connection
+      .instance(instance_name)
       .codebox(codeboxId);
     codebox.result = this._kickoffCodebox;
     codebox._getResult = this._getCodeboxResult;
