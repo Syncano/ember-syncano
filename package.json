@@ -1,6 +1,6 @@
 {
   "name": "ember-syncano",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "The Ember CLI addon for seemlessly interacting with Syncano.",
   "directories": {
     "doc": "doc",
